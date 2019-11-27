@@ -1,0 +1,26 @@
+{
+  "name": "clever-test-requests",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./start-app.js",
+    "start:dev": "nodemon ./start-app.js"
+  },
+  "dependencies": {
+    "@hapi/good": "8.2.4",
+    "@hapi/good-console": "8.1.2",
+    "@hapi/good-squeeze": "5.2.1",
+    "@hapi/hapi": "18.4.0",
+    "@hapi/inert": "^5.2.2",
+    "convict": "5.2.0",
+    "hapi-require-https": "^4.0.0",
+    "redis": "^2.8.0",
+    "statuses": "^1.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  },
+  "engines": {
+    "node": "^12"
+  }
+}
