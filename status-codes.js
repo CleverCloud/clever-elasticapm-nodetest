@@ -2,7 +2,7 @@
 
 const redis = require('redis');
 const { promisify } = require('util');
-const { STATUS_CODES } = require('statuses');
+const statuses = require('statuses');
 
 const config = require('./config/config.js');
 
@@ -24,6 +24,8 @@ const rpushAsync = promisify(redisClient.rpush).bind(redisClient);
 function mapObject (obj, mapCallback) {
   return Object.fromEntries(Object.entries(obj).map(mapCallback));
 }
+
+console.log(statuses.STATUS_CODES)
 
 async function recordResponse (statusCode) {
 
@@ -83,21 +85,23 @@ module.exports = {
 
           const statusCodeStr = request.params.statusCode;
           const statusCode = Number(statusCodeStr);
-          const responseStatusCode = (STATUS_CODES[statusCode] == null)
+          const responseStatusCode = (statuses.STATUS_CODES[statusCode] == null)
             ? 400
             : statusCode;
 
-          const responseMessage = (STATUS_CODES[statusCode] == null)
+          const responseMessage = (statuses.STATUS_CODES[statusCode] == null)
             ? 'statusCode must be a valid HTTP status code number'
-            : `${statusCode}: ${STATUS_CODES[statusCode]}`;
+            : `${statusCode}: ${statuses.STATUS_CODES[statusCode]}`;
 
           await recordResponse(responseStatusCode);
 
-          const resp = h
-            .response(responseMessage)
-            .code(responseStatusCode);
+          const resp = statuses.empty[responseStatusCode]
+            ? h.response()
+            : h.response(responseMessage);
 
-          if (300 <= responseStatusCode && responseStatusCode < 400) {
+          resp.code(responseStatusCode);
+
+          if (statuses.redirect[responseStatusCode]) {
             resp.header('Location', '/');
           }
 
