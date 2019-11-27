@@ -93,9 +93,15 @@ module.exports = {
 
           await recordResponse(responseStatusCode);
 
-          return h
+          const resp = h
             .response(responseMessage)
             .code(responseStatusCode);
+
+          if (300 <= responseStatusCode && responseStatusCode < 400) {
+            resp.header('Location', '/');
+          }
+
+          return resp;
         },
       },
 
