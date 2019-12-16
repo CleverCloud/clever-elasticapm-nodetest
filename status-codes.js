@@ -25,13 +25,13 @@ function mapObject (obj, mapCallback) {
   return Object.fromEntries(Object.entries(obj).map(mapCallback));
 }
 
-console.log(statuses.STATUS_CODES)
-
-async function recordResponse (statusCode) {
+async function recordResponse (statusCode, xTestScheduler = 'outside') {
 
   // YYYY-MM-DDT-HH
   const date = new Date().toISOString().slice(0, 13);
-  const redisKey = `${APP_ID}_${date}`;
+  const redisKey = `${APP_ID}_${xTestScheduler}_${date}`;
+
+  console.log({ redisKey });
 
   // Expire in 25 hours
   await expireAsync(redisKey, 60 * 60 * 25);
@@ -93,7 +93,10 @@ module.exports = {
             ? 'statusCode must be a valid HTTP status code number'
             : `${statusCode}: ${statuses.STATUS_CODES[statusCode]}`;
 
-          await recordResponse(responseStatusCode);
+          await recordResponse(responseStatusCode, 'ALL');
+          if (request.headers['x-test-scheduler'] != null) {
+            await recordResponse(responseStatusCode, request.headers['x-test-scheduler']);
+          }
 
           const resp = statuses.empty[responseStatusCode]
             ? h.response()
