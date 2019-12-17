@@ -93,7 +93,7 @@ module.exports = {
             ? 'statusCode must be a valid HTTP status code number'
             : `${statusCode}: ${statuses.STATUS_CODES[statusCode]}`;
 
-          await recordResponse(responseStatusCode, 'ALL');
+          await recordResponse(responseStatusCode);
           if (request.headers['x-test-scheduler'] != null) {
             await recordResponse(responseStatusCode, request.headers['x-test-scheduler']);
           }
