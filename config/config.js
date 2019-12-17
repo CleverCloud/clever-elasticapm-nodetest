@@ -15,28 +15,7 @@ const conf = convict({
     default: '8080',
     required: true,
     env: 'PORT',
-  },
-  REDIS_HOST: {
-    doc: 'Host to access redis instance',
-    format: String,
-    required: true,
-    default: null,
-    env: 'REDIS_HOST',
-  },
-  REDIS_PORT: {
-    doc: 'Port to access redis instance',
-    format: Number,
-    required: true,
-    default: null,
-    env: 'REDIS_PORT',
-  },
-  REDIS_PASSWORD: {
-    doc: 'Password to access redis instance',
-    format: String,
-    required: true,
-    default: null,
-    env: 'REDIS_PASSWORD',
-  },
+  }
 });
 
 module.exports = conf;
