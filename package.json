@@ -13,6 +13,7 @@
     "@hapi/hapi": "18.4.0",
     "@hapi/inert": "^5.2.2",
     "convict": "5.2.0",
+    "elastic-apm-node": "^3.3.0",
     "hapi-require-https": "^4.0.0",
     "statuses": "^1.5.0"
   },
