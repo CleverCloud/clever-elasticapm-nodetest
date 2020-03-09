@@ -1,7 +1,6 @@
 'use strict';
 
 const statuses = require('statuses');
-const apm = require('elastic-apm-node').start()
 
 module.exports = {
   name: 'status-codes.routes',
